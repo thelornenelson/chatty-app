@@ -50,6 +50,8 @@ class App extends Component {
         },
 
     ]};
+
+    this.sendNewMessage = this.sendNewMessage.bind(this);
   }
 
   componentDidMount() {
@@ -65,12 +67,16 @@ class App extends Component {
     }, 3000);
   }
 
+  sendNewMessage(message){
+    console.log(`Sending new message ${message}`);
+  }
+
   render() {
     console.log("Rendering <App />");
     return (
       <div>
         <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser}/>
+        <ChatBar currentUser={this.state.currentUser} sendNewMessage={this.sendNewMessage}/>
       </div>
     );
   }
