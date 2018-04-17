@@ -57,15 +57,20 @@ class App extends Component {
 
   componentDidMount() {
     console.log("componentDidMount <App />");
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      // Add a new message to the list of messages in the data store
-      const newMessage = {id: this.state.messages.length + 1, username: "Michelle", content: "Hello there!"};
-      const messages = this.state.messages.concat(newMessage)
-      // Update the state of the app component.
-      // Calling setState will trigger a call to render() in App and all child components.
-      this.setState({messages: messages})
-    }, 3000);
+    // setTimeout(() => {
+    //   console.log("Simulating incoming message");
+    //   // Add a new message to the list of messages in the data store
+    //   const newMessage = {id: this.state.messages.length + 1, username: "Michelle", content: "Hello there!"};
+    //   const messages = this.state.messages.concat(newMessage)
+    //   // Update the state of the app component.
+    //   // Calling setState will trigger a call to render() in App and all child components.
+    //   this.setState({messages: messages})
+    // }, 3000);
+    this.socket = new WebSocket("ws://localhost:3001");
+    this.socket.onopen = () => {
+      console.log("Websockets Connected");
+    };
+
   }
 
   sendNewMessage(message){
@@ -79,6 +84,12 @@ class App extends Component {
     };
 
     this.setState({ messages: this.state.messages.concat([newMessage]) });
+
+    if(this.socket.readyState !== 1){
+      console.log("Websocket connection not open");
+    } else {
+      this.socket.send(JSON.stringify(newMessage));
+    }
 
   }
 
