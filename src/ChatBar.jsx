@@ -17,7 +17,7 @@ class ChatBar extends Component {
 
     };
 
-    console.log("Rendering <ChatBar />");
+    // console.log("Rendering <ChatBar />");
 
     return (
       <footer className="chatbar" >
