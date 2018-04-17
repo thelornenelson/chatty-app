@@ -29,25 +29,41 @@ class App extends Component {
 
   }
 
-  sendNewMessage(message){
-    console.log(`Sending new message ${message}`);
-
-    const newMessage = {
-        content: message,
-        username: this.state.currentUser.name
-    };
+  sendWebsocket(message){
 
     if(this.socket.readyState !== 1){
       console.log("Websocket connection not open");
     } else {
-      this.socket.send(JSON.stringify(newMessage));
+      this.socket.send(JSON.stringify(message));
     }
+
+  }
+
+  sendNewMessage(message){
+    console.log(`Sending new message ${message}`);
+
+    const newMessage = {
+        type: "postMessage",
+        content: message,
+        username: this.state.currentUser.name
+    };
+
+    this.sendWebsocket(newMessage);
 
   }
 
   setUsername(username){
     console.log(`Setting username to ${username}`);
+
+    const newMessage = {
+        type: "postNotification",
+        oldUsername: this.state.currentUser.name,
+        username: username
+    };
+
     this.setState({ currentUser: { name: username } });
+
+    this.sendWebsocket(newMessage);
   }
 
   render() {
