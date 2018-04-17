@@ -2,9 +2,17 @@ import React, {Component} from 'react';
 
 class ChatBar extends Component {
   render() {
-    const onKeyUp = (event) => {
+
+    const userNameHandler = (event) => {
+
+        this.props.setUsername(event.target.value);
+
+    }
+
+    const messageHandler = (event) => {
+
       if(event.keyCode === 13){
-        console.log("Pressed Enter");
+        this.props.sendNewMessage(event.target.value);
       }
 
     };
@@ -12,9 +20,9 @@ class ChatBar extends Component {
     console.log("Rendering <ChatBar />");
 
     return (
-      <footer className="chatbar">
-        <input className="chatbar-username" placeholder="Your Name (Optional)" defaultValue={this.props.currentUser.name}/>
-        <input onKeyUp={onKeyUp} className="chatbar-message" placeholder="Type a message and hit ENTER" />
+      <footer className="chatbar" >
+        <input onChange={ userNameHandler } className="chatbar-username" name="username" placeholder="Your Name (Optional)" defaultValue={this.props.currentUser.name}/>
+        <input onKeyUp={ messageHandler } className="chatbar-message" name="message" placeholder="Type a message and hit ENTER" />
       </footer>
     );
   }
