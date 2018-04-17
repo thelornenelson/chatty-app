@@ -5,7 +5,7 @@ import MessageList from './MessageList.jsx';
 class App extends Component {
   constructor(){
     super();
-    this.state = {currentUser: {name: "Andrew"},
+    this.state = {currentUser: {name: "Anonymous"},
       messages: [
         {
             id: 1,
