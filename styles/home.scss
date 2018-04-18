@@ -40,7 +40,19 @@
 
   .message {
     display: flex;
+    flex-flow: row wrap;
     padding: 5px;
+  }
+
+  .message-images {
+    display: flex;
+    flex-flow: row wrap;
+    padding-left: 15%;
+
+    img {
+      max-width: 60%;
+      margin: 0px 10px 0px 10px;
+    }
   }
 
   .message.system {
@@ -53,6 +65,30 @@
     overflow: hidden;
     margin: 5px;
     padding: 0 10px;
+  }
+
+  .message-username.color-id- {
+    &0 {
+      color: #25514c;
+      // background-color: invert(#25514c);
+    }
+    &1 {
+      color: #a9bd58;
+      // background-color: invert(#a9bd58);
+    }
+    &2 {
+      color: #ecab1e;
+      // background-color: invert(#ecab1e);
+    }
+    &3 {
+      color: #ef5c1e;
+      // background-color: invert(#ef5c1e);
+    }
+    &4 {
+      color: #c72627;
+      // background-color: invert(#c72627);
+    }
+
   }
 
   .message-content {
@@ -73,6 +109,7 @@
     position: fixed;
     right: 0;
     top: 0;
+    // display: flex;
   }
 
   .navbar-brand {
@@ -85,4 +122,14 @@
     line-height: 60px;
     padding: 0 10px;
     text-decoration: none;
+  }
+
+  .navbar .user-count {
+    float: right;
+    display: block;
+    color: inherit;
+    font-weight: 700;
+    font-size: 20px;
+    height: 60px;
+    line-height: 60px;
   }

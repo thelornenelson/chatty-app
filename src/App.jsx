@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
+import NavBar from './NavBar.jsx';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 
 class App extends Component {
   constructor(){
     super();
-    this.state = {currentUser: {name: ""},
+    this.state = {currentUser: {name: "Anonymous"},
+      userCount: 0,
       messages: []};
 
     this.sendNewMessage = this.sendNewMessage.bind(this);
@@ -22,8 +24,20 @@ class App extends Component {
 
     this.socket.onmessage = (newMessageEvent) => {
       console.log("New Message: ", JSON.parse(newMessageEvent.data));
+      const parsedMessage = JSON.parse(newMessageEvent.data);
 
-      this.setState({ messages: this.state.messages.concat( [JSON.parse(newMessageEvent.data)] ) });
+      // incomingNotification
+      // incomingMessage
+
+      if(parsedMessage.type === "incomingNotification" && parsedMessage.userCount){
+        // message is a notification, and userCount exists and is non-zero.
+        this.setState({ userCount: Number(parsedMessage.userCount) });
+
+      } else {
+
+        this.setState({ messages: this.state.messages.concat( [JSON.parse(newMessageEvent.data)] ) });
+
+      }
 
     }
 
@@ -70,6 +84,7 @@ class App extends Component {
     // console.log("Rendering <App />");
     return (
       <div>
+        <NavBar userCount={ this.state.userCount }/>
         <MessageList messages={ this.state.messages }/>
         <ChatBar currentUser={ this.state.currentUser } sendNewMessage={ this.sendNewMessage } setUsername={ this.setUsername }/>
       </div>
