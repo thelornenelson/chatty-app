@@ -49,8 +49,13 @@
     flex-flow: row wrap;
     padding-left: 15%;
 
+    div {
+      max-width: 70.5%;
+    }
+
     img {
-      max-width: 60%;
+      width: 100%;
+      height: auto;
       margin: 0px 10px 0px 10px;
     }
   }

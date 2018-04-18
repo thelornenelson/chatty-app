@@ -17,7 +17,7 @@ class Message extends Component {
     }
 
     return imageUrls.map( url => {
-      return (<img key={ url } src={ url } alt="attached image"/>);
+      return (<div key={ url + "div" }><img key={ url } src={ url } alt="attached image"/></div>);
     });
   }
 
