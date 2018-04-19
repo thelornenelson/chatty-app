@@ -8,15 +8,18 @@ A real time chat application, using WebSockets and React.
 1. Users are assigned a sequential Anonymous username and color on initial connect.
 2. Usernames can be changed and username changes are broadcast to all connected users.
 3. Users can send messages which are broadcast to call connected clients.
-4. Application will display number of currently connected users in the nav bar.
-5. Application with indicate when users connect or disconnect from the chat channel.
+4. If message contains any image urls, images will be posted in the message feed.
+5. Application will display number of currently connected users in the nav bar.
+6. Application with indicate when users connect or disconnect from the chat channel.
 
 ## Final Product
-!["Splash Screen"](https://github.com/thelornenelson/altmaps/blob/master/docs/main-splash.png)
+!["Chat Demo"](https://github.com/thelornenelson/chatty-app/blob/master/docs/chat-demo.png)
+!["Image Posting"](https://github.com/thelornenelson/chatty-app/blob/master/docs/chat-demo.png)
+!["User Colors Demo"](https://github.com/thelornenelson/chatty-app/blob/master/docs/chat-demo.png)
 
 ## Getting Started
 
-You need both the Chatty App and Chatter Server for this project to function.
+You need both the Chatty App and Chatty Server for this project to function.
 
 ### Chatty Server
 1. Clone the [chatty-server](https://github.com/thelornenelson/chatty-server) repository.
