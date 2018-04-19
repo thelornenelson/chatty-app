@@ -20,6 +20,9 @@ class ChatBar extends Component {
     // alternatively if user stops typing (hasn't changed username in unchangedInTime), update the username
     const userNameChangeHandler = (event) => {
 
+      // update value of username input in App state
+      this.props.changeUsername(event.target.value);
+
       // delay in milliseconds after user stops typing
       const unchangedInTime = 800;
 
@@ -65,7 +68,7 @@ class ChatBar extends Component {
           className="chatbar-username"
           name="username"
           placeholder="Your Name (Optional)"
-          defaultValue={this.props.currentUser.name}
+          value={ this.props.currentUser.nameInputValue }
         />
         <input
           onKeyUp={ messageHandler }

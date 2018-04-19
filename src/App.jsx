@@ -8,7 +8,8 @@ class App extends Component {
     super();
 
     // set default state. messageInput is bound to the message input field
-    this.state = {currentUser: {name: "Anonymous"},
+    const defaultName = "Anonymous";
+    this.state = {currentUser: {name: defaultName, nameInputValue: defaultName},
       userCount: 0,
       messages: [],
       messageInput: ""};
@@ -16,12 +17,24 @@ class App extends Component {
     this.sendNewMessage = this.sendNewMessage.bind(this);
     this.setUsername = this.setUsername.bind(this);
     this.changeMessage = this.changeMessage.bind(this);
+    this.changeUsername = this.changeUsername.bind(this);
   }
 
   componentDidMount() {
 
     // open websocket connection
     this.socket = new WebSocket("ws://localhost:3001");
+
+    this.socket.onopen = (open) => {
+
+      const newMessage = {
+          type: "postGenerateUsername",
+          username: this.state.currentUser.name
+      };
+
+      this.sendWebSocket(newMessage);
+
+    };
 
     this.socket.onmessage = (newMessageEvent) => {
 
@@ -32,6 +45,12 @@ class App extends Component {
 
         // if message is a notification and userCount exists and is non-zero then update count of connected users
         this.setState({ userCount: Number(parsedMessage.userCount) });
+
+      } else if(parsedMessage.type === "incomingGenerateUsername"){
+
+        // if server has send us a new username
+        console.log(`new message for user name change`, parsedMessage);
+        this.setState({ currentUser: { name: parsedMessage.content, nameInputValue: parsedMessage.content } });
 
       } else {
 
@@ -55,6 +74,11 @@ class App extends Component {
   // used to bind controlled message input field
   changeMessage(message){
     this.setState({messageInput: message});
+  }
+
+  // used to bind controlled username input field
+  changeUsername(username){
+    this.setState({ currentUser: { name: this.state.currentUser.name, nameInputValue: username } });
   }
 
   // prepares new message, blanks messsage input field, and sends message
@@ -83,7 +107,7 @@ class App extends Component {
           username: username
       };
 
-      this.setState({ currentUser: { name: username } });
+      this.setState({ currentUser: { name: username, nameInputValue: username } });
 
       this.sendWebSocket(newMessage);
     }
@@ -97,6 +121,7 @@ class App extends Component {
         <MessageList messages={ this.state.messages }/>
         <ChatBar
           changeMessage={ this.changeMessage }
+          changeUsername={ this.changeUsername }
           messageInput={ this.state.messageInput }
           currentUser={ this.state.currentUser }
           sendNewMessage={ this.sendNewMessage }
