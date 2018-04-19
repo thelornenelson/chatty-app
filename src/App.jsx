@@ -8,10 +8,12 @@ class App extends Component {
     super();
     this.state = {currentUser: {name: "Anonymous"},
       userCount: 0,
-      messages: []};
+      messages: [],
+      messageInput: ""};
 
     this.sendNewMessage = this.sendNewMessage.bind(this);
     this.setUsername = this.setUsername.bind(this);
+    this.changeMessage = this.changeMessage.bind(this);
   }
 
   componentDidMount() {
@@ -53,14 +55,20 @@ class App extends Component {
 
   }
 
-  sendNewMessage(message){
-    console.log(`Sending new message ${message}`);
+  changeMessage(message){
+    this.setState({messageInput: message});
+  }
+
+  sendNewMessage(){
+    console.log(`Sending new message ${this.state.messageInput}`);
 
     const newMessage = {
         type: "postMessage",
-        content: message,
+        content: this.state.messageInput,
         username: this.state.currentUser.name
     };
+
+    this.setState({messageInput: ""});
 
     this.sendWebsocket(newMessage);
 
@@ -86,7 +94,7 @@ class App extends Component {
       <div>
         <NavBar userCount={ this.state.userCount }/>
         <MessageList messages={ this.state.messages }/>
-        <ChatBar currentUser={ this.state.currentUser } sendNewMessage={ this.sendNewMessage } setUsername={ this.setUsername }/>
+        <ChatBar changeMessage={ this.changeMessage } messageInput={ this.state.messageInput } currentUser={ this.state.currentUser } sendNewMessage={ this.sendNewMessage } setUsername={ this.setUsername }/>
       </div>
     );
   }

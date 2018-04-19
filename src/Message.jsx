@@ -16,9 +16,13 @@ class Message extends Component {
       imageUrls.push(lastMatch[0]);
     }
 
-    return imageUrls.map( url => {
-      return (<div key={ url + "div" }><img key={ url } src={ url } alt="attached image"/></div>);
-    });
+    if(imageUrls.length === 0){
+      return null;
+    } else {
+      return imageUrls.map( url => {
+        return (<div key={ url + "div" }><img key={ url } src={ url } alt="attached image"/></div>);
+      });
+    }
   }
 
   render() {
@@ -32,15 +36,15 @@ class Message extends Component {
       );
     } else {
       return (
-        <div>
+        <div className="message-divider">
           <div className="message">
             <span className={"message-username color-id-" + this.props.message.colorId}>{this.props.message.username}</span>
             <span className="message-content">{this.props.message.content}</span>
 
           </div>
-          <div className="message-images">
+          { this.imageParse() && ( <div className="message-images">
             { this.imageParse() }
-          </div>
+          </div> ) }
         </div>
       );
     }

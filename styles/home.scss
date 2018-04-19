@@ -1,6 +1,8 @@
   @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700");
   @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 
+  $user-colors: #19435a #d86822 #ef422d #e8cc35 #18916d;
+
   body {
     background: white;
     color: black;
@@ -44,6 +46,20 @@
     padding: 5px;
   }
 
+  .message-divider {
+    border-bottom: 1px solid #eeeeee;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: #eeeeee;
+    }
+  }
+
+
+
   .message-images {
     display: flex;
     flex-flow: row wrap;
@@ -70,28 +86,20 @@
     overflow: hidden;
     margin: 5px;
     padding: 0 10px;
+    border-radius: 0px 5px 15px 5px;
+
   }
 
-  .message-username.color-id- {
-    &0 {
-      color: #25514c;
-      // background-color: invert(#25514c);
-    }
-    &1 {
-      color: #a9bd58;
-      // background-color: invert(#a9bd58);
-    }
-    &2 {
-      color: #ecab1e;
-      // background-color: invert(#ecab1e);
-    }
-    &3 {
-      color: #ef5c1e;
-      // background-color: invert(#ef5c1e);
-    }
-    &4 {
-      color: #c72627;
-      // background-color: invert(#c72627);
+  .message-username {
+    color: #F5EEDC;
+  }
+
+  .message-username.color-id {
+
+    @for $i from 1 through length($user-colors){
+      &-#{$i - 1} {
+        background-color: nth($user-colors, $i);
+      }
     }
 
   }
