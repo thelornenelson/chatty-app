@@ -1,18 +1,25 @@
-  @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700");
+@import url('https://fonts.googleapis.com/css?family=Oxygen:400,700');
   @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 
-  $user-colors: #19435a #d86822 #ef422d #e8cc35 #18916d;
+  $user-colors: #19435a #d86822 #ef422d #18916d #3E090D;
+
+  $primary-color: #8FD4DA;
+  $primary-contrast: #FEFCFA;
+  $primary-text-contrast: #FEFCFA;
+  $input-highlight: #3E090D;
+
+  $bar-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 
   body {
-    background: white;
+    background: $primary-contrast;
     color: black;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Oxygen', sans-serif;
     font-size: 14px;
     margin: 70px 0;
   }
 
   .chatbar {
-    background: tomato;
+    background: $primary-color;
     border-top: 1px solid black;
     bottom: 0;
     display: flex;
@@ -20,6 +27,8 @@
     padding: 5px;
     position: fixed;
     right: 0;
+    box-shadow: $bar-box-shadow;
+    
   }
 
   .chatbar-message,
@@ -30,6 +39,12 @@
     line-height: 40px;
     margin: 5px;
     padding: 0 9px;
+    transition: all 0.20s ease-in-out;
+    outline: none;
+
+    &:focus {
+      box-shadow: 0px 0px 2px 0px $input-highlight;;
+    }
   }
 
   .chatbar-message {
@@ -54,7 +69,7 @@
     }
 
     &:hover {
-      background-color: #eeeeee;
+      background-color: darken($primary-contrast, 7%);
     }
   }
 
@@ -85,7 +100,7 @@
   .message-username {
     overflow: hidden;
     margin: 5px;
-    padding: 0 10px;
+    padding: 3px 10px;
     border-radius: 0px 5px 15px 5px;
 
   }
@@ -114,7 +129,7 @@
   }
 
   .navbar {
-    background: tomato;
+    background: $primary-color;
     border-bottom: 1px solid black;
     height: 60px;
     left: 0;
@@ -122,7 +137,7 @@
     position: fixed;
     right: 0;
     top: 0;
-    // display: flex;
+    box-shadow: $bar-box-shadow;
   }
 
   .navbar-brand {
@@ -142,7 +157,8 @@
     display: block;
     color: inherit;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     height: 60px;
     line-height: 60px;
+
   }

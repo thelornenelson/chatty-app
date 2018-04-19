@@ -68,7 +68,7 @@ class ChatBar extends Component {
           className="chatbar-username"
           name="username"
           placeholder="Your Name (Optional)"
-          value={ this.props.currentUser.nameInputValue }
+          value={ this.props.currentUser.nameInput }
         />
         <input
           onKeyUp={ messageHandler }

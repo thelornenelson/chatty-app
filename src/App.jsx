@@ -7,9 +7,9 @@ class App extends Component {
   constructor(){
     super();
 
-    // set default state. messageInput is bound to the message input field
+    // set default state. messageInput is bound to the message input field, nameInput is bound to the name input field.
     const defaultName = "Anonymous";
-    this.state = {currentUser: {name: defaultName, nameInputValue: defaultName},
+    this.state = {currentUser: {name: defaultName, nameInput: defaultName},
       userCount: 0,
       messages: [],
       messageInput: ""};
@@ -50,7 +50,7 @@ class App extends Component {
 
         // if server has send us a new username
         console.log(`new message for user name change`, parsedMessage);
-        this.setState({ currentUser: { name: parsedMessage.content, nameInputValue: parsedMessage.content } });
+        this.setState({ currentUser: { name: parsedMessage.content, nameInput: parsedMessage.content } });
 
       } else {
 
@@ -78,7 +78,7 @@ class App extends Component {
 
   // used to bind controlled username input field
   changeUsername(username){
-    this.setState({ currentUser: { name: this.state.currentUser.name, nameInputValue: username } });
+    this.setState({ currentUser: { name: this.state.currentUser.name, nameInput: username } });
   }
 
   // prepares new message, blanks messsage input field, and sends message
@@ -107,7 +107,7 @@ class App extends Component {
           username: username
       };
 
-      this.setState({ currentUser: { name: username, nameInputValue: username } });
+      this.setState({ currentUser: { name: username, nameInput: username } });
 
       this.sendWebSocket(newMessage);
     }
