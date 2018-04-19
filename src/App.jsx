@@ -25,7 +25,7 @@ class App extends Component {
     // open websocket connection
     this.socket = new WebSocket("ws://localhost:3001");
 
-    this.socket.onopen = (open) => {
+    this.socket.onopen = () => {
 
       const newMessage = {
           type: "postGenerateUsername",
@@ -49,7 +49,6 @@ class App extends Component {
       } else if(parsedMessage.type === "incomingGenerateUsername"){
 
         // if server has send us a new username
-        console.log(`new message for user name change`, parsedMessage);
         this.setState({ currentUser: { name: parsedMessage.content, nameInput: parsedMessage.content } });
 
       } else {
