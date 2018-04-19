@@ -75,17 +75,21 @@ class App extends Component {
   }
 
   setUsername(username){
-    console.log(`Setting username to ${username}`);
 
-    const newMessage = {
-        type: "postNotification",
-        oldUsername: this.state.currentUser.name,
-        username: username
-    };
+    if(this.state.currentUser.name !== username){
+      console.log(`Setting username to ${username}`);
 
-    this.setState({ currentUser: { name: username } });
+      const newMessage = {
+          type: "postNotification",
+          oldUsername: this.state.currentUser.name,
+          username: username
+      };
 
-    this.sendWebsocket(newMessage);
+      this.setState({ currentUser: { name: username } });
+
+      this.sendWebsocket(newMessage);
+    }
+    
   }
 
   render() {
