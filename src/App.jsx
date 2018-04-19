@@ -6,6 +6,8 @@ import MessageList from './MessageList.jsx';
 class App extends Component {
   constructor(){
     super();
+
+    // set default state. messageInput is bound to the message input field
     this.state = {currentUser: {name: "Anonymous"},
       userCount: 0,
       messages: [],
@@ -17,35 +19,30 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // console.log("componentDidMount <App />");
 
+    // open websocket connection
     this.socket = new WebSocket("ws://localhost:3001");
-    this.socket.onopen = () => {
-      console.log("Websockets Connected");
-    };
 
     this.socket.onmessage = (newMessageEvent) => {
-      console.log("New Message: ", JSON.parse(newMessageEvent.data));
-      const parsedMessage = JSON.parse(newMessageEvent.data);
 
-      // incomingNotification
-      // incomingMessage
+      const parsedMessage = JSON.parse(newMessageEvent.data);
+      // parsedMessage.type will be either incomingNotification or incomingMessage
 
       if(parsedMessage.type === "incomingNotification" && parsedMessage.userCount){
-        // message is a notification, and userCount exists and is non-zero.
+
+        // if message is a notification and userCount exists and is non-zero then update count of connected users
         this.setState({ userCount: Number(parsedMessage.userCount) });
 
       } else {
 
+        //otherwise just add the message to existing messages in state. This applies to notifications and messages, which ultimately get handled differently by the Message component.
         this.setState({ messages: this.state.messages.concat( [JSON.parse(newMessageEvent.data)] ) });
 
       }
-
     }
-
   }
 
-  sendWebsocket(message){
+  sendWebSocket(message){
 
     if(this.socket.readyState !== 1){
       console.log("Websocket connection not open");
@@ -55,12 +52,13 @@ class App extends Component {
 
   }
 
+  // used to bind controlled message input field
   changeMessage(message){
     this.setState({messageInput: message});
   }
 
+  // prepares new message, blanks messsage input field, and sends message
   sendNewMessage(){
-    console.log(`Sending new message ${this.state.messageInput}`);
 
     const newMessage = {
         type: "postMessage",
@@ -70,14 +68,14 @@ class App extends Component {
 
     this.setState({messageInput: ""});
 
-    this.sendWebsocket(newMessage);
+    this.sendWebSocket(newMessage);
 
   }
 
   setUsername(username){
 
     if(this.state.currentUser.name !== username){
-      console.log(`Setting username to ${username}`);
+    // only do this if the username has actually changed
 
       const newMessage = {
           type: "postNotification",
@@ -87,20 +85,26 @@ class App extends Component {
 
       this.setState({ currentUser: { name: username } });
 
-      this.sendWebsocket(newMessage);
+      this.sendWebSocket(newMessage);
     }
-    
+
   }
 
   render() {
-    // console.log("Rendering <App />");
     return (
       <div>
         <NavBar userCount={ this.state.userCount }/>
         <MessageList messages={ this.state.messages }/>
-        <ChatBar changeMessage={ this.changeMessage } messageInput={ this.state.messageInput } currentUser={ this.state.currentUser } sendNewMessage={ this.sendNewMessage } setUsername={ this.setUsername }/>
+        <ChatBar
+          changeMessage={ this.changeMessage }
+          messageInput={ this.state.messageInput }
+          currentUser={ this.state.currentUser }
+          sendNewMessage={ this.sendNewMessage }
+          setUsername={ this.setUsername }
+        />
       </div>
     );
   }
 }
+
 export default App;

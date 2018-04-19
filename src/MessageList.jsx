@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
 import Message from './Message.jsx';
 
-class MessageList extends Component {
-  render() {
-    // console.log("Rendering <MessageList />");
+// this is the main message display area, which consists of a number of Message components.
+function MessageList(props) {
 
-    const messages = this.props.messages.map((message) => {
+    const messages = props.messages.map((message) => {
       return (<Message key={ message.id } message={ message } />);
     });
 
     return (
       <main className="messages">
-        {messages}
+        { messages }
       </main>
     );
-  }
+
 }
 export default MessageList;
