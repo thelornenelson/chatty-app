@@ -48,7 +48,7 @@ class App extends Component {
 
       } else if(parsedMessage.type === "incomingGenerateUsername"){
 
-        // if server has send us a new username
+        // if server has sent us a new username
         this.setState({ currentUser: { name: parsedMessage.content, nameInput: parsedMessage.content } });
 
       } else {
@@ -56,6 +56,8 @@ class App extends Component {
         //otherwise just add the message to existing messages in state. This applies to notifications and messages, which ultimately get handled differently by the Message component.
         this.setState({ messages: this.state.messages.concat( [JSON.parse(newMessageEvent.data)] ) });
 
+        // scroll to bottom of message list
+        window.scrollTo({ left: 0, top: document.body.clientHeight, behavior: "smooth" });
       }
     }
   }
@@ -83,16 +85,18 @@ class App extends Component {
   // prepares new message, blanks messsage input field, and sends message
   sendNewMessage(){
 
-    const newMessage = {
-        type: "postMessage",
-        content: this.state.messageInput,
-        username: this.state.currentUser.name
-    };
+    if(this.state.messageInput.length > 0){
 
-    this.setState({messageInput: ""});
+      const newMessage = {
+          type: "postMessage",
+          content: this.state.messageInput,
+          username: this.state.currentUser.name
+      };
 
-    this.sendWebSocket(newMessage);
+      this.setState({messageInput: ""});
 
+      this.sendWebSocket(newMessage);
+    }
   }
 
   setUsername(username){
